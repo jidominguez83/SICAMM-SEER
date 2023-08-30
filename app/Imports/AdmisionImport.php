@@ -26,9 +26,9 @@ class AdmisionImport implements ToCollection, WithHeadingRow
             {
                 // Verifica si existe el participante en la tabla [participantes].
                 $id = Participante::select('id')->where('curp', $row['curp'])->get();
-
+                //dd($id);
                 // Si no existe entonces inserta los datos del participante.
-                if($id == null){
+                if(count($id) == 0){//dd($id);
                     Participante::create([
                         'curp' => $row['curp'],
                         'rfc' => $row['rfc'],
@@ -46,10 +46,11 @@ class AdmisionImport implements ToCollection, WithHeadingRow
                 // Verifica si existe el ciclo en la tabla [ciclos].
                 $ciclo = Ciclo::select('id')->where('ciclo', $row['ciclo'])->get();
 
-                if($ciclo == null){
+                if(count($ciclo) == 0){
                     // Si no existe entonces inserta los datos del ciclo.
                     Ciclo::create([
-                        'ciclo' => $row['ciclo']
+                        'ciclo' => $row['ciclo'],
+                        'activo' => 1
                     ]);
                 }
 
@@ -113,7 +114,8 @@ class AdmisionImport implements ToCollection, WithHeadingRow
                 ]);                
             }
         } catch(Exception $ex) {
-            return "Ocurrió un error al importar el listado de ordenamiento: ".$ex;
+            dd($ex);
+            return redirect()->route('sicamm.ordenamiento')->with('error', 'Ocurrió un error al subir el listado: '.$ex);
         }
     }
 }

@@ -21,5 +21,5 @@ Route::get('/home', function () {
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/sicamm/ordenamiento/{proceso_id?}/{ciclo?}/{valoracion_id?}', [ParticipacionProcesoController::class, 'ordenamiento'])->name('sicamm.ordenamiento');
+Route::get('/sicamm/ordenamiento/{proceso_id}/{ciclo?}/{valoracion_id?}', [ParticipacionProcesoController::class, 'ordenamiento'])->name('sicamm.ordenamiento');
 Route::post('cargar-ordenamiento', [ParticipacionProcesoController::class, 'cargar_ordenamiento'])->name('cargar-ordenamiento');

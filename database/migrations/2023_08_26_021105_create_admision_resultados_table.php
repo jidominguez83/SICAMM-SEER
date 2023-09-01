@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('admision_resultados', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('participacion_procesos_id');
-            $table->string('p_fpd', 3);
+            $table->string('p_fpd', 5);
             $table->string('promedio', 30);
-            $table->string('p_prom'. 5);
+            $table->string('p_prom', 5);
             $table->string('h_cursos', 4);
             $table->string('p_hcursos', 10);
-            $table->string('prac_doc', 30);
+            $table->string('prac_doc', 30)->nullable();
             $table->string('eje_doc', 3);
             $table->string('p_ed', 5);
             $table->string('constancia', 2);

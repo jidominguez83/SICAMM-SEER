@@ -25,10 +25,10 @@ class AdmisionImport implements ToCollection, WithHeadingRow
             foreach ($collection as $row) 
             {
                 // Verifica si existe el participante en la tabla [participantes].
-                $id = Participante::select('id')->where('curp', $row['curp'])->get();
-                //dd($id);
-                // Si no existe entonces inserta los datos del participante.
-                if(count($id) == 0){//dd($id);
+                $participante = Participante::select('id')->where('curp', $row['curp'])->first();
+//dd(!isset($participante->id));
+                //Si no existe entonces inserta los datos del participante.
+                if(isset($participante->id) == false){
                     Participante::create([
                         'curp' => $row['curp'],
                         'rfc' => $row['rfc'],
@@ -37,32 +37,31 @@ class AdmisionImport implements ToCollection, WithHeadingRow
                         'apellido_materno' => $row['apellido_materno'],
                     ]);
 
-                    $participanteId = Participante::latest('id')->first();
-                } else {
-                    // Si existe, recupera el id del participante.
-                    $participanteId = $id;
+                    $participante = Participante::latest('id')->first();
                 }
 
                 // Verifica si existe el ciclo en la tabla [ciclos].
-                $ciclo = Ciclo::select('id')->where('ciclo', $row['ciclo'])->get();
+                $ciclo = Ciclo::select('id')->where('ciclo', $row['ciclo'])->first();
 
-                if(count($ciclo) == 0){
+                if(isset($ciclo->id) == false){
                     // Si no existe entonces inserta los datos del ciclo.
                     Ciclo::create([
                         'ciclo' => $row['ciclo'],
                         'activo' => 1
                     ]);
+
+                    $ciclo = Ciclo::latest('id')->first();
                 }
 
                 // Obtiene el Id de la valoración.
-                $valoracion = Valoracion::select('id')->where('nombre', $row['tipo_de_valoracion'])->get();
+                $valoracion = Valoracion::select('id')->where('nombre', $row['tipo_de_valoracion'])->first();
 
                 // Inserta los datos de participación en el proceso del participante en [participacion_procesos].
                 ParticipacionProceso::create([
-                    'participante_id' => $participanteId,
-                    'ciclo_id' => $ciclo,
+                    'participante_id' => $participante->id,
+                    'ciclo_id' => $ciclo->id,
                     'folio_federal' => $row['folio'],
-                    'valoracion_id' => $valoracion,
+                    'valoracion_id' => $valoracion->id,
                     'p_global' => $row['p_fin'],
                     'posicion' => $row['pos_orden'], 
                     'estatus' => 1, 
@@ -70,12 +69,12 @@ class AdmisionImport implements ToCollection, WithHeadingRow
                 ]);
 
                 // Recupera el último id insertado en [participacion_proceso].
-                $participacionProcesoId = ParticipacionProceso::latest('id')->first();
+                $participacionProceso = ParticipacionProceso::latest('id')->first();
 
                 // Inserta los resultados del participante en [admision_resultados].
                 AdmisionResultado::create([
-                    'participacion_procesos_id' => $participacionProcesoId,
-                    'p_fpd' => $row['p_fpd'],
+                    'participacion_procesos_id' => $participacionProceso->id,
+                    'p_fpd' => 10,//$row['p_fpd'],
                     'promedio' => $row['promedio'],
                     'p_prom' => $row['p_prom'],
                     'h_cursos' => $row['h_cursos'],
@@ -87,31 +86,39 @@ class AdmisionImport implements ToCollection, WithHeadingRow
                     'p_aca' => $row['p_aca']
                 ]);
 
-                // Inserta el primer email.
-                Email::create([
-                    'participante_id' => $participanteId,
-                    'email' => $row['correo1']
-                ]);
+                if(!is_null($row['correo1'])){
+                    // Inserta el primer email.
+                    Email::create([
+                        'participante_id' => $participante->id,
+                        'email' => $row['correo1']
+                    ]);
+                }
 
-                // Inserta el segundo email.
-                Email::create([
-                    'participante_id' => $participanteId,
-                    'email' => $row['correo2']
-                ]);
+                if(!is_null($row['correo2'])){
+                    // Inserta el segundo email.
+                    Email::create([
+                        'participante_id' => $participante->id,
+                        'email' => $row['correo2']
+                    ]);
+                }
 
-                // Inserta el primer teléfono.
-                Telefono::create([
-                    'participante_id' => $participanteId,
-                    'telefono' => $row['telefono1'],
-                    'tipo' => 'Celular'
-                ]);
+                if(!is_null($row['telefono1'])){
+                    // Inserta el primer teléfono.
+                    Telefono::create([
+                        'participante_id' => $participante->id,
+                        'telefono' => $row['telefono1'],
+                        'tipo' => 'Celular'
+                    ]);
+                }
 
-                // Inserta el segundo teléfono.
-                Telefono::create([
-                    'participante_id' => $participanteId,
-                    'telefono' => $row['telefono2'],
-                    'tipo' => 'Celular'
-                ]);                
+                if(!is_null($row['telefono2'])){
+                    // Inserta el segundo teléfono.
+                    Telefono::create([
+                        'participante_id' => $participante->id,
+                        'telefono' => $row['telefono2'],
+                        'tipo' => 'Casa'
+                    ]); 
+                }                          //dd("aquí");     
             }
         } catch(Exception $ex) {
             dd($ex);

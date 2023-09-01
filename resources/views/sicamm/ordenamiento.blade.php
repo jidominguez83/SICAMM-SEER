@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+
+<?php $num_participantes = count($participantes); ?>
+
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
@@ -32,6 +35,7 @@
                     </div>
 
                     <table class="table table-striped table-hover mt-3">
+                        @if (isset($participantes) && $num_participantes > 0)
                         <thead>
                             <tr>
                                 <th scope="col">CURP</th>
@@ -41,12 +45,16 @@
                                 <th scope="col"></th>
                             </tr>
                         </thead>
+                        @endif
+        
                         <tbody>
+                            @foreach ($participantes as $participante)
                             <tr>
-                                <th scope="row">DOTJ831005HSPMRS04</th>
-                                <td>JESUS IVAN DOMINGUEZ TORRES</td>
-                                <td>1</td>
-                                <td>10.0000</td>
+                                <th scope="row">{{ $participante->curp }}</th>
+                                <td>{{ $participante->nombre." ".$participante->apellido_paterno."
+                                    ".$participante->apellido_materno }}</td>
+                                <td>{{ $participante->posicion }}</td>
+                                <td>{{ $participante->p_global }}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic outlined example">
                                         <a href="{{-- route('participantes.detail-proceso',['participacion_id'=>$participante->participacion_id]) --}}"
@@ -61,27 +69,13 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <th scope="row">TEBJ900316MSPLRS09</th>
-                                <td>JESSICA EDHALIN TELLES BARBOSA</td>
-                                <td>2</td>
-                                <td>10.0000</td>
-                                <td>
-                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                        <a href="{{-- route('participantes.detail-proceso',['participacion_id'=>$participante->participacion_id]) --}}"
-                                            class="btn btn-success btn-sm"><i class="bi bi-eye-fill" title="Ver detalle"></i>
-                                        </a>
-                                        <a href="{{-- route('participantes.details',['participante_id'=>$participante->participante_id]) --}}"
-                                            class="btn btn-primary btn-sm"><i class="bi bi-file-earmark-person-fill" title="Ver datos completos del participante"></i>
-                                        </a>
-                                        <a href="{{-- route('participantes.incidencias',['participante_id'=>$participante->participante_id,'participacion_id'=>$participante->participacion_id]) --}}"
-                                            class="btn btn-secondary btn-sm"><i class="bi bi-exclamation-circle-fill" title="Incidencias"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>                            
+                            @endforeach                           
                         </tbody>
                     </table>
+
+                    <!-- Paginación -->
+                    {{ $participantes->links('pagination::bootstrap-5') }}
+                    
                 </div>
             </div>
 
@@ -101,6 +95,8 @@
                                 <input class="form-control" type="file" id="file_ordenamiento" name="file_ordenamiento" accept=".xlsx">
                             </div>
                         </div>
+
+                        <input type="hidden" name="proceso_id" id="proceso_id" value="{{ $proceso->id }}">
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

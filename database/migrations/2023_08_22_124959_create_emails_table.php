@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('emails', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('participante_id');
-            $table->string('email', 50)->unique();
+            $table->string('email', 100);
 
             $table->foreign('participante_id')->references('id')->on('participantes');
         });

@@ -17,7 +17,7 @@ class ParticipacionProcesoController extends Controller
         $this->middleware('auth');
     }
 
-    public function ordenamiento($proceso_id, $ciclo_id, $valoracion_id)
+    public function ordenamiento($proceso_id, $ciclo_id = null, $valoracion_id = null)
     {
         $ciclos = Ciclo::all();
         $valoraciones = Valoracion::all();
@@ -50,9 +50,12 @@ class ParticipacionProcesoController extends Controller
     }
 
     public function cargar_ordenamiento(Request $request){
+        $proceso_id = $request->input('proceso_id');
         $file = $request->file('file_ordenamiento');
         Excel::import(new AdmisionImport, $file);
 
-        return redirect()->route('sicamm.ordenamiento')->with('success', 'El listado de ordenamiento ha sido cargado correctamente.');
+        return redirect()->route('sicamm.ordenamiento', [
+            'proceso_id' => $proceso_id,
+        ])->with('success', 'El listado de ordenamiento ha sido cargado correctamente.');
     }
 }

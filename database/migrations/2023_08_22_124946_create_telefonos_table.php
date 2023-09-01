@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('telefonos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('participante_id');
-            $table->string('telefono', 10)->unique();
+            $table->string('telefono', 10);
             $table->string('tipo', 10);
             
             $table->foreign('participante_id')->references('id')->on('participantes');

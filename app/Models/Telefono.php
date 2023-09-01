@@ -9,6 +9,8 @@ class Telefono extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'participante_id',
         'telefono',

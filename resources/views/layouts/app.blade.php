@@ -11,6 +11,12 @@
 
     <title>SEER | Coordinación General del SICAMM{{-- config('app.name','Laravel') --}}</title>
 
+    <!-- Scripts -->
+    <script src="{{-- asset('js/app.js') --}}" defer></script>
+    <script src="{{ asset('js/main.js') }}" type="module"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -38,22 +44,22 @@
                     @else
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Asignaciones</a>
+                            <a class="nav-link" href="{{ route('rh.uploads') }}">Asignaciones</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Admisión</a>
+                            <a class="nav-link" href="{{ route('sicamm.ordenamiento', ['proceso_id' => 1]) }}">Admisión</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Tutoría</a>
+                            <a class="nav-link" href="{{ route('sicamm.ordenamiento', ['proceso_id' => 2]) }}">Tutoría</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Promoción
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Promoción vertical</a></li>
-                                <li><a class="dropdown-item" href="#">Promoción horizontal</a></li>
-                                <li><a class="dropdown-item" href="#">Horas adicionales</a></li>
+                                <li><a class="dropdown-item" href="{{ route('sicamm.ordenamiento', ['proceso_id' => 3]) }}">Promoción vertical</a></li>
+                                <li><a class="dropdown-item" href="{{ route('sicamm.ordenamiento', ['proceso_id' => 4]) }}">Promoción horizontal</a></li>
+                                <li><a class="dropdown-item" href="{{ route('sicamm.ordenamiento', ['proceso_id' => 5]) }}">Horas adicionales</a></li>
                             </ul>
                         </li>
                     </ul>

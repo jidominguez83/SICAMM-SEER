@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ParticipacionProcesoController;
+use App\Http\Controllers\UploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +22,10 @@ Route::get('/home', function () {
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/sicamm/ordenamiento/{proceso_id}/{ciclo?}/{valoracion_id?}', [ParticipacionProcesoController::class, 'ordenamiento'])->name('sicamm.ordenamiento');
-Route::post('cargar-ordenamiento', [ParticipacionProcesoController::class, 'cargar_ordenamiento'])->name('cargar-ordenamiento');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/rh/uploads', [UploadController::class, 'uploads'])->name('rh.uploads');
+
+Route::controller(ParticipacionProcesoController::class)->group(function(){
+    Route::get('/sicamm/ordenamiento/{proceso_id}/{ciclo?}/{valoracion_id?}', 'ordenamiento')->name('sicamm.ordenamiento');
+    Route::post('cargar-ordenamiento', 'cargar_ordenamiento')->name('cargar-ordenamiento');
+});

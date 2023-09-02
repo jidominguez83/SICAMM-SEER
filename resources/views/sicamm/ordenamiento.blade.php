@@ -13,26 +13,30 @@
                     <a href="{{ asset('docs/Layout_Ordenamiento_Admisión.xlsx') }}" class="btn btn-outline-success"><i class="bi bi-file-earmark-spreadsheet"></i>&nbsp;Descargar layout</a>
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCargaOrdenamiento"><i class="bi bi-file-earmark-plus"></i>&nbsp;Cargar listado de ordenamiento</button>
                     <div class="form-floating mt-3">
-                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                        <select class="form-select" id="select_ciclo" aria-label="Ciclo escolar">
                             <option value="0" @if ($ciclo_id==0) {{ "selected" }} @endif>- Seleccione el ciclo escolar -</option>
                             @foreach($ciclos as $ciclo)
                             <option value="{{ $ciclo->id }}" @if ($ciclo_id==$ciclo->id) {{ "selected" }} @endif>{{ $ciclo->ciclo }}</option>
                             @endforeach
                         </select>
-                        <label for="floatingSelect">Ciclo escolar</label>
+                        <label for="select_ciclo">Ciclo escolar</label>
                     </div>
 
-                    <div class="form-floating mt-3">
-                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                            <option value="0" @if ($valoracion_id==0) {{ "selected" }} @endif>- Seleccione el tipo de valoración -</option>
-                            @foreach ($valoraciones as $valoracion)
-                            <option value="{{ $valoracion->id }}" @if ($valoracion_id==$valoracion->id) {{ "selected" }} @endif>
-                                {{ $valoracion->nombre }}
-                            </option>
-                            @endforeach
-                        </select>
-                        <label for="floatingSelect">Tipo de valoración</label>
-                    </div>
+                    <form name="valoracion_id" id="form_valoracion_id" method="GET" action="#">
+                        @csrf
+                        <div class="form-floating mt-3">
+                            <select class="form-select" id="select_valoracion_id" aria-label="Tipo de valoración">
+                                <option value="0" @if ($valoracion_id==0) {{ "selected" }} @endif>- Seleccione el tipo de valoración -</option>
+                                @foreach ($valoraciones as $valoracion)
+                                <option value="{{ $valoracion->id }}" @if ($valoracion_id==$valoracion->id) {{ "selected" }} @endif>
+                                    {{ $valoracion->nombre }}
+                                </option>
+                                @endforeach
+                            </select>
+                            <label for="select_valoracion_id">Tipo de valoración</label>
+                        </div>
+                        <input type="hidden" value="{{ $proceso->id }}" name="select_proceso_id" id="select_proceso_id">
+                    </form>
 
                     <table class="table table-striped table-hover mt-3">
                         @if (isset($participantes) && $num_participantes > 0)
@@ -110,49 +114,4 @@
                 </div>
             </div>
         </div>
-            {{-- <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Cargar listado de ordenamiento</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="formFile" class="form-label">Subir layout</label>
-                            <input class="form-control" type="file" id="formFile" accept=".xlsx">
-                        </div>
-                        <div class="form-floating">
-                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                <option selected>- Seleccione-</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                            <label for="floatingSelect">Proceso</label>
-                        </div>
-                        <div class="form-floating mt-3">
-                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                <option selected>- Seleccione -</option>
-                                <option value="1">Temporal</option>
-                                <option value="2">Definitiva</option>
-                            </select>
-                            <label for="floatingSelect">Tipo de contratación</label>
-                        </div>
-                        <div class="form-floating mt-3">
-                            <input type="number" class="form-control" id="floatingInputValue" placeholder="name@example.com" value="test@example.com">
-                            <label for="floatingInputValue">No. de oficio de Oficialía Mayor</label>
-                        </div> 
-                        <div class="form-floating mt-3">
-                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                            <label for="floatingTextarea">Descripción breve del archivo</label>
-                        </div> 
-                    </div>
-                    <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div> --}}
 @endsection

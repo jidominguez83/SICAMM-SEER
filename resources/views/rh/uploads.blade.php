@@ -64,10 +64,12 @@
                         </div>
                         <div class="form-floating">
                             <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                <option selected>- Seleccione-</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                <option>- Seleccione-</option>
+                                @foreach ($procesos as $proceso)
+                                <option value="{{ $proceso->id }}" >
+                                    {{ $proceso->nombre }}
+                                </option>
+                                @endforeach
                             </select>
                             <label for="floatingSelect">Proceso</label>
                         </div>

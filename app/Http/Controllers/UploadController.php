@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\AsignadoImport;
+use App\Models\Proceso;
 use Illuminate\Http\Request;
 use App\Models\Upload;
 use Exception;
@@ -16,13 +17,16 @@ class UploadController extends Controller
     }
 
     public function uploads(){
+        $procesos = Proceso::all();
+
         $uploads = Upload::select('uploads.*', 
                                 'nombre_proceso')
                             ->join('procesos', 'proceso_id', '=', 'procesos.id')
                             ->paginate(10);
 
         return view('rh.uploads', [
-            'uploads' => $uploads
+            'uploads' => $uploads,
+            'procesos' => $procesos
         ]);
     }
 

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('uploads', function (Blueprint $table) {
+        Schema::create('asignaciones', function (Blueprint $table) {
             $table->id();
             $table->unsignedTinyInteger('proceso_id');            
             $table->string('descripcion', 100);
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('uploads');
+        Schema::dropIfExists('asignaciones');
     }
 };

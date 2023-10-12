@@ -6,45 +6,50 @@
                 <div class="card-header">Historial de asignaciones</div>
 
                 <div class="card-body">
-                    <a href="{{ asset('docs/Layout_Ordenamiento_Admisión.xlsx') }}" class="btn btn-outline-success"><i class="bi bi-file-earmark-spreadsheet"></i>&nbsp;Descargar layout</a>
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCargaAsignados"><i class="bi bi-file-earmark-plus"></i>&nbsp;Cargar listado de asignaciones</button>
-                    <table class="table table-striped table-hover mt-3">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Proceso</th>
-                                <th scope="col">Descripción</th>
-                                <th scope="col">Fecha de carga</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>
-                                    <button type="button" class="btn btn-secondary">
-                                        <i class="bi bi-eye"></i>&nbsp;
-                                        Ver asignados
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                                <td>
-                                    <button type="button" class="btn btn-secondary">
-                                        <i class="bi bi-eye"></i>&nbsp;
-                                        Ver asignados
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCargaAsignados"><i class="bi bi-plus-square"></i>&nbsp;Agregar asignaciones</button>
+
+                    @if(count($asignaciones) > 0)
+                        <table class="table table-striped table-hover mt-3">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Proceso</th>
+                                    <th scope="col">Descripción</th>
+                                    <th scope="col">Fecha de carga</th>
+                                    <th scope="col">No. asignados</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td>Otto</td>
+                                    <td>@mdo</td>
+                                    <td>5</td>
+                                    <td>
+                                        <a href="{{ route('rh.asignados', ['asignacion_id' => 1]) }}" class="btn btn-secondary">
+                                            <i class="bi bi-eye"></i>&nbsp;
+                                            Ver asignados
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                    <td>8</td>
+                                    <td>
+                                        <a href="{{ route('rh.asignados', ['asignacion_id' => 2]) }}" class="btn btn-secondary">
+                                            <i class="bi bi-eye"></i>&nbsp;
+                                            Ver asignados
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
             </div>
         </div>
@@ -54,14 +59,10 @@
                 <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Cargar listado de asignaciones</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Crear grupo de asignaciones</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="formFile" class="form-label">Subir layout</label>
-                            <input class="form-control" type="file" id="formFile" accept=".xlsx">
-                        </div>
                         <div class="form-floating">
                             <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
                                 <option>- Seleccione-</option>
@@ -87,14 +88,14 @@
                         </div> 
                         <div class="form-floating mt-3">
                             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                            <label for="floatingTextarea">Descripción breve del archivo</label>
+                            <label for="floatingTextarea">Descripción</label>
                         </div> 
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary">
-                        <i class="bi bi-arrow-bar-up"></i>&nbsp;
-                        Cargar layout
+                        <i class="bi bi-floppy"></i>&nbsp;
+                        Guardar
                     </button>
                     </div>
                 </div>

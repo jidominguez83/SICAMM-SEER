@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Upload extends Model
+class Asignacion extends Model
 {
     use HasFactory;
+
+    protected $table = 'asignaciones';
 
     public function asignados(){
         return $this->hasMany(Asignado::class);

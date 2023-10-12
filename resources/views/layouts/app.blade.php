@@ -20,7 +20,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -44,7 +44,7 @@
                     @else
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('rh.uploads') }}">Asignaciones</a>
+                            <a class="nav-link" href="{{ route('rh.asignaciones') }}">Asignaciones</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('sicamm.ordenamiento', ['proceso_id' => 1]) }}">Admisión</a>

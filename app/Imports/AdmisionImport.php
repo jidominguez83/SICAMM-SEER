@@ -26,7 +26,7 @@ class AdmisionImport implements ToCollection, WithHeadingRow
             {
                 // Verifica si existe el participante en la tabla [participantes].
                 $participante = Participante::select('id')->where('curp', $row['curp'])->first();
-//dd(!isset($participante->id));
+
                 //Si no existe entonces inserta los datos del participante.
                 if(isset($participante->id) == false){
                     Participante::create([

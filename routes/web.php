@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ParticipacionProcesoController;
-use App\Http\Controllers\UploadController;
+use App\Http\Controllers\AsignacionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +23,12 @@ Route::get('/home', function () {
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/rh/uploads', [UploadController::class, 'uploads'])->name('rh.uploads');
+
+Route::controller(AsignacionController::class)->group(function(){
+    Route::get('/rh/asignaciones', 'asignaciones')->name('rh.asignaciones');
+    Route::post('cargar-asignados', 'cargar_asignados')->name('cargar-asignados');
+    Route::get('/rh/asignados/{asignacion_id}', 'asignados')->name('rh.asignados');
+});
 
 Route::controller(ParticipacionProcesoController::class)->group(function(){
     Route::get('/sicamm/ordenamiento/{proceso_id}/{ciclo?}/{valoracion_id?}', 'ordenamiento')->name('sicamm.ordenamiento');

@@ -44,8 +44,8 @@ class Asignado extends Model
         'folio_oficialia_mayor'
     ];
 
-    public function upload(){
-        return $this->belongsTo(Upload::class);
+    public function asignacion(){
+        return $this->belongsTo(Asignacion::class);
     }
 
     public function ct(){
@@ -54,5 +54,9 @@ class Asignado extends Model
 
     public function participante(){
         return $this->hasOne(Participante::class);
+    }
+
+    public function plazas_asignadas(){
+        return $this->hasMany(PlazaAsignada::class);
     }
 }
